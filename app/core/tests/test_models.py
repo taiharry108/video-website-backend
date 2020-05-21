@@ -2,12 +2,45 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
+from datetime import date
+
 from .. import models
 
 
 def sample_user(email='test@gmail.com', password='testpass'):
     """Create a simple user"""
     return get_user_model().objects.create_user(email, password)
+
+
+def sample_show():
+    return models.Show.objects.create(
+        name='Show 1',
+        num_seasons=1,
+        num_eps=10,
+        is_finished=False,
+        thum_img_url="",
+        rating=4,
+        last_update=date.today()
+    )
+
+
+def sample_season(show):
+    return models.Season.objects.create(
+        name='Season 1',
+        num_eps=10,
+        show=show,
+        last_update=date.today()
+    )
+
+
+def sample_ep(season):
+    return models.Ep.objects.create(
+        name='Ep 01',
+        show=season.show,
+        season=season,
+        idx=0,
+        last_update=date.today()
+    )
 
 
 class ModelTests(TestCase):
@@ -42,3 +75,29 @@ class ModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_show_str(self):
+        """Test the show string representation"""
+        show = sample_show()
+
+        self.assertEqual(
+            str(show), f"{show.name}:[{show.num_seasons}][{show.num_eps}]")
+
+    def test_season_str(self):
+        """Test the season string representation"""
+        show = sample_show()
+        season = sample_season(show)
+
+        self.assertEqual(str(season),
+                         f"{season.show.name} - {season.name} [{season.num_eps}]"
+                         )
+
+    def test_ep_str(self):
+        """Test the ep string representation"""
+        show = sample_show()
+        season = sample_season(show)
+        ep = sample_ep(season)
+
+        self.assertEqual(str(ep),
+                         f"{season.show.name} - {season.name} [{ep.name}]"
+                         )

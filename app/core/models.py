@@ -36,3 +36,50 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Show(models.Model):
+    """Show model"""
+    name = models.CharField(max_length=255)
+    last_update = models.DateField()
+    num_seasons = models.IntegerField()
+    num_eps = models.IntegerField()
+    thum_img_url = models.CharField(max_length=255)
+    banner_img_url = models.CharField(max_length=255, blank=True)
+    rating = models.FloatField()
+    is_finished = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.name}:[{self.num_seasons}][{self.num_eps}]"
+
+
+class Season(models.Model):
+    """Season for a show"""
+    name = models.CharField(max_length=255)
+    last_update = models.DateField()
+    num_eps = models.IntegerField()
+    show = models.ForeignKey(
+        Show,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.show.name} - {self.name} [{self.num_eps}]"
+
+
+class Ep(models.Model):
+    """Ep of a season"""
+    name = models.CharField(max_length=255)
+    last_update = models.DateField()
+    idx = models.IntegerField()
+    show = models.ForeignKey(
+        Show,
+        on_delete=models.CASCADE
+    )
+    season = models.ForeignKey(
+        Season,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.show.name} - {self.season.name} [{self.name}]"
