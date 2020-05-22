@@ -19,13 +19,13 @@ def detail_url(show_id):
 
 
 class PublicShowsApiTests(TestCase):
-    """Test the publicly available tags API"""
+    """Test the publicly available shows API"""
 
     def setUp(self):
         self.client = APIClient()
 
     def test_no_login_required(self):
-        """Test that no login is required for retrieving tags"""
+        """Test that no login is required for retrieving shows"""
         res = self.client.get(SHOWS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
