@@ -5,42 +5,8 @@ from django.contrib.auth import get_user_model
 from datetime import date
 
 from .. import models
+from ..utils import sample_ep, sample_season, sample_show, sample_user
 
-
-def sample_user(email='test@gmail.com', password='testpass'):
-    """Create a simple user"""
-    return get_user_model().objects.create_user(email, password)
-
-
-def sample_show():
-    return models.Show.objects.create(
-        name='Show 1',
-        num_seasons=1,
-        num_eps=10,
-        is_finished=False,
-        thum_img_url="",
-        rating=4,
-        last_update=date.today()
-    )
-
-
-def sample_season(show):
-    return models.Season.objects.create(
-        name='Season 1',
-        num_eps=10,
-        show=show,
-        last_update=date.today()
-    )
-
-
-def sample_ep(season):
-    return models.Ep.objects.create(
-        name='Ep 01',
-        show=season.show,
-        season=season,
-        idx=0,
-        last_update=date.today()
-    )
 
 
 class ModelTests(TestCase):
