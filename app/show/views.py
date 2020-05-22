@@ -30,3 +30,16 @@ class SeasonViewSet(viewsets.ModelViewSet):
             return [permissions.AllowAny()]
         else:
             return [permissions.IsAdminUser()]
+
+
+class EpViewSet(viewsets.ModelViewSet):
+    """Manage Seasons in database"""
+    queryset = Ep.objects.all()
+    serializer_class = serializers.EpSerializer
+    authentication_classes = (TokenAuthentication, )
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [permissions.AllowAny()]
+        else:
+            return [permissions.IsAdminUser()]

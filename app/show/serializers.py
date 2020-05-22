@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Show, Season
+from core.models import Show, Season, Ep
 
 
 class ShowSerializer(serializers.ModelSerializer):
@@ -33,5 +33,21 @@ class SeasonSerializer(serializers.ModelSerializer):
             'last_update',
             'num_eps',
             'show',
+        )
+        read_only_fields = ('id', )
+
+
+class EpSerializer(serializers.ModelSerializer):
+    """Serializer for ep objects"""
+
+    class Meta:
+        model = Ep
+        fields = (
+            'id',
+            'name',
+            'last_update',
+            'idx',
+            'show',
+            'season',
         )
         read_only_fields = ('id', )

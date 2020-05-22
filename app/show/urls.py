@@ -6,6 +6,7 @@ from . import views
 router = DefaultRouter()
 router.register('shows', views.ShowViewSet)
 router.register('seasons', views.SeasonViewSet)
+router.register('eps', views.EpViewSet)
 
 app_name = 'show'
 
