@@ -7,6 +7,7 @@ router = DefaultRouter()
 router.register('shows', views.ShowViewSet)
 router.register('seasons', views.SeasonViewSet)
 router.register('eps', views.EpViewSet)
+router.register('featuredShows', views.FeaturedShowViewSet)
 
 app_name = 'show'
 

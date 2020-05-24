@@ -53,6 +53,16 @@ class Show(models.Model):
         return f"{self.name}:[{self.num_seasons}][{self.num_eps}]"
 
 
+class FeaturedShow(models.Model):
+    """Featured show model"""
+    show = models.ForeignKey(
+        Show,
+        on_delete=models.CASCADE
+    )
+    header = models.CharField(max_length=255)
+    subheader = models.CharField(max_length=255)
+
+
 class Season(models.Model):
     """Season for a show"""
     name = models.CharField(max_length=255)

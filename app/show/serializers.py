@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Show, Season, Ep
+from core.models import Show, Season, Ep, FeaturedShow
 
 
 class ShowSerializer(serializers.ModelSerializer):
@@ -18,6 +18,20 @@ class ShowSerializer(serializers.ModelSerializer):
             'banner_img_url',
             'rating',
             'is_finished'
+        )
+        read_only_fields = ('id', )
+
+
+class FeaturedShowSerializer(serializers.ModelSerializer):
+    """Serializer for featured show objects"""
+
+    class Meta:
+        model = FeaturedShow
+        fields = (
+            'id',
+            'show',
+            'header',
+            'subheader',
         )
         read_only_fields = ('id', )
 
